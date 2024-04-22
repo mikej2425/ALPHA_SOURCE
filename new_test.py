@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 import tkinter.font as tkFont
@@ -14,6 +15,14 @@ from collections import defaultdict
 # CloudDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/CloudDivisionTable.xlsx"
 # ProjectTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/ProjectTable.xlsx"
 
+
+
+# Check if running on a headless environment like Render
+if 'DISPLAY' not in os.environ:
+    # If not, set up a virtual display using xvfb
+    os.system('Xvfb :0 -screen 0 1024x768x24 &')
+    os.environ['DISPLAY'] = ':0'
+
 InsertTable = "./Alpha Data Project/InsertTable.xlsx"
 ResourceTable = "./Alpha Data Project/ResourcesTable.xlsx"
 MsdtDivisionTable = "./Alpha Data Project/MsdtDivisionTable.xlsx"
@@ -27,14 +36,6 @@ df_msdtdivision_table = pd.read_excel(MsdtDivisionTable)
 df_cybersecuritydivision_table = pd.read_excel(CyberSecurityDivisionTable)
 df_clouddivision_table = pd.read_excel(CloudDivisionTable)
 df_project_table = pd.read_excel(ProjectTable)
-
-import os
-
-# Check if running on a headless environment like Render
-if 'DISPLAY' not in os.environ:
-    # If not, set up a virtual display using xvfb
-    os.system('Xvfb :0 -screen 0 1024x768x24 &')
-    os.environ['DISPLAY'] = ':0'
 
 class App:
 
