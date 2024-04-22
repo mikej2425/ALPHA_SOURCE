@@ -7,12 +7,19 @@ from pandas.tseries.offsets import BDay
 import datetime
 from collections import defaultdict
 
-InsertTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/InsertTable.xlsx"
-ResourceTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/ResourcesTable.xlsx"
-MsdtDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/MsdtDivisionTable.xlsx"
-CyberSecurityDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/CyberSecurityDivisionTable.xlsx"
-CloudDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/CloudDivisionTable.xlsx"
-ProjectTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/ProjectTable.xlsx"
+# InsertTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/InsertTable.xlsx"
+# ResourceTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/ResourcesTable.xlsx"
+# MsdtDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/MsdtDivisionTable.xlsx"
+# CyberSecurityDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/CyberSecurityDivisionTable.xlsx"
+# CloudDivisionTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/CloudDivisionTable.xlsx"
+# ProjectTable = "C:/Users/Jubin/Desktop/Desktop/ALPHA_SOURCE/Alpha Data Project/ProjectTable.xlsx"
+
+InsertTable = "./Alpha Data Project/InsertTable.xlsx"
+ResourceTable = "./Alpha Data Project/ResourcesTable.xlsx"
+MsdtDivisionTable = "./Alpha Data Project/MsdtDivisionTable.xlsx"
+CyberSecurityDivisionTable = "./Alpha Data Project/CyberSecurityDivisionTable.xlsx"
+CloudDivisionTable = "./Alpha Data Project/CloudDivisionTable.xlsx"
+ProjectTable = "./Alpha Data Project/ProjectTable.xlsx"
 
 df_insert_table = pd.read_excel(InsertTable)
 df_resource_table = pd.read_excel(ResourceTable)
