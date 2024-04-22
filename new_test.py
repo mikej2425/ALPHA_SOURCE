@@ -30,7 +30,7 @@ df_project_table = pd.read_excel(ProjectTable)
 
 import os
 
-# Check if running on a headless environment (like Render)
+# Check if running on a headless environment like Render
 if 'DISPLAY' not in os.environ:
     # If not, set up a virtual display using xvfb
     os.system('Xvfb :0 -screen 0 1024x768x24 &')
