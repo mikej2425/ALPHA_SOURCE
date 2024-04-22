@@ -28,6 +28,14 @@ df_cybersecuritydivision_table = pd.read_excel(CyberSecurityDivisionTable)
 df_clouddivision_table = pd.read_excel(CloudDivisionTable)
 df_project_table = pd.read_excel(ProjectTable)
 
+import os
+
+# Check if running on a headless environment (like Render)
+if 'DISPLAY' not in os.environ:
+    # If not, set up a virtual display using xvfb
+    os.system('Xvfb :0 -screen 0 1024x768x24 &')
+    os.environ['DISPLAY'] = ':0'
+
 class App:
 
 
