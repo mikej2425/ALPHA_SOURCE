@@ -57,7 +57,13 @@ def employee():
 def project():
     return render_template('project.html')
 
+@app.route('/add_resource')
+def add_resource():
+    return render_template('add_resource.html')
 
+@app.route('/add_project')
+def add_project():
+    return render_template('add_project.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

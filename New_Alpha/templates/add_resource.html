@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Resource</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 300px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .upload-btn {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            margin: 10px auto;
+            width: 80%;
+            max-width: 300px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upload-btn:hover {
+            background-color: #45a049;
+        }
+        /* Table styles */
+        #output_wrapper {
+            position: relative;
+            overflow: auto; /* Enable vertical scrolling */
+            max-height: 300px; /* Set maximum height */
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+</head>
+<body>
+    <h1>Add Resource</h1>
+    <div class="container" >
+        <!-- Your division content goes here -->
+        <input type="file" id="excel-file" onchange="getData(this.files)" accept=".xlsx, .xls">
+        <label for="excel-file" class="upload-btn">Upload Excel File</label>
+    </div>
+    <div class="container">
+        
+        <div >
+            <div class="addDeleteBtnContainer">
+                <button class="addRowBtn">Add Row</button>
+                <button class="deleteRowBtn">Delete Row</button>
+            </div>
+            <div id="output_wrapper">
+                <table id="output" class="display"></table>
+            </div>
+        </div>
+    </div>
+    <!-- Add back button -->
+    <a href="{{ url_for('index') }}">Back</a>
+</body>
+<script>
+    function getData(files){
+        const file = files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const data = new Uint8Array(event.target.result);
+            const workbook = XLSX.read(data, {type: 'array'});
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(sheet, {header: 1});
+            displayData(jsonData);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    function displayData(data) {
+        const table = $('#output').DataTable({
+            data: data.slice(1), // slice to remove header row
+            columns: data[0].map(function(col) {
+                return { title: col };
+            }),
+            dom: 'tBfrtip', // include buttons for table manipulation
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "scrollX": true, // enable horizontal scroll if needed
+            "scrollCollapse": true, // collapse the table if needed
+            "paging": false, // disable paging
+            "columnDefs": [
+                { "targets": 0, "orderable": false }, // disable sorting for the first column (headers)
+                { "targets": "_all", "className": "editable" } // add a class for all columns except headers for editing
+            ]
+        });
+
+        // Enable editing
+        $('#output').on('dblclick', 'tbody td.editable', function(){
+            var oldValue = $(this).text();
+            $(this).html('<input type="text" value="' + oldValue + '">');
+        });
+
+        // Save edited value on focusout
+        $('#output').on('focusout', 'input', function(){
+            var newValue = $(this).val();
+            $(this).parent().text(newValue);
+        });
+
+        // Add Row button
+        $('.addRowBtn').on('click', function() {
+            table.row.add(["", "", "", ""]).draw(); // add a new row with empty values
+        });
+
+        // Delete Row button
+        $('.container').on('click', '.deleteRowBtn', function() {
+            var row = $(this).closest('tr');
+            table.row(row).remove().draw();
+        });
+    }
+</script>
+</html>
